@@ -1,0 +1,477 @@
+.app-root {
+  display: flex;
+  min-height: 100vh;
+  color: #111827;
+}
+
+.sidebar {
+  width: 260px;
+  background: #111827;
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+}
+
+.sidebar-header {
+  padding: 8px 12px 16px;
+  border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+  margin-bottom: 8px;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sidebar-subtitle {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.sidebar-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  padding: 12px 12px 4px;
+}
+
+.nav-group {
+  margin-bottom: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #e5e7eb;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.nav-item:hover {
+  background: rgba(55, 65, 81, 0.9);
+}
+
+.nav-item.active {
+  background: #f97316;
+  color: #111827;
+}
+
+.nav-item-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.main-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  background: #f3f4f6;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.main-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.main-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.main-content {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow:
+    0 10px 15px -3px rgba(15, 23, 42, 0.08),
+    0 4px 6px -4px rgba(15, 23, 42, 0.05);
+  flex: 1;
+  min-height: 0;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-card {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  background: #f9fafb;
+}
+
+.event-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.event-type-tag {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.event-type-课程 {
+  background-color: #4caf50;
+}
+
+.event-type-试课 {
+  background-color: #ffc107;
+  color: #111827;
+}
+
+.event-type-练活 {
+  background-color: #2196f3;
+}
+
+.event-type-培训 {
+  background-color: #9c27b0;
+}
+
+.event-time {
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.event-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: #4b5563;
+  margin-bottom: 2px;
+}
+
+.event-notes {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Timetable grid layout (方案 D) */
+.timetable {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.timetable-grid {
+  display: grid;
+  font-size: 12px;
+}
+
+.timetable-grid--week {
+  grid-template-columns: 80px repeat(7, minmax(0, 1fr));
+}
+
+.timetable-grid--today {
+  grid-template-columns: 80px minmax(0, 1fr);
+}
+
+.timetable-header-cell {
+  padding: 6px 8px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+  font-weight: 600;
+  text-align: center;
+}
+
+.timetable-header-cell-muted {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.timetable-row-label {
+  padding: 6px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.timetable-slot-cell {
+  padding: 4px 6px;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+  min-height: 40px;
+}
+
+.timetable-slot-cell:last-child {
+  border-right: none;
+}
+
+.timetable-empty {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.timetable-event {
+  border-radius: 6px;
+  padding: 3px 5px;
+  margin-bottom: 3px;
+  font-size: 11px;
+  background: #eef2ff;
+  border-left: 3px solid #6366f1;
+}
+
+.timetable-event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1px;
+}
+
+.timetable-event-title {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.timetable-event-meta {
+  font-size: 10px;
+  color: #6b7280;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.event-list-row:hover {
+  background: #f3f4f6;
+}
+
+.stats-kpi-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.stats-kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.stats-kpi-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.stats-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #374151;
+}
+
+
+.timetable-event-课程 {
+  border-left-color: #22c55e;
+  background: #dcfce7;
+}
+
+.timetable-event-试课 {
+  border-left-color: #facc15;
+  background: #fef9c3;
+}
+
+.timetable-event-练活 {
+  border-left-color: #3b82f6;
+  background: #dbeafe;
+}
+
+.timetable-event-培训 {
+  border-left-color: #a855f7;
+  background: #f3e8ff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #374151;
+  flex: 1;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 6px 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: 2px solid #f97316;
+  outline-offset: 1px;
+  border-color: #f97316;
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.primary-button {
+  border-radius: 999px;
+  border: none;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f97316;
+  color: #111827;
+  cursor: pointer;
+}
+
+.primary-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.form-message {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.secondary-button {
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  padding: 6px 14px;
+  font-size: 13px;
+  background-color: #ffffff;
+  color: #374151;
+  cursor: pointer;
+}
+
+.danger-button {
+  border-radius: 999px;
+  border: 1px solid #fecaca;
+  padding: 6px 14px;
+  font-size: 13px;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  width: 380px;
+  max-width: calc(100% - 32px);
+  box-shadow:
+    0 20px 25px -5px rgba(15, 23, 42, 0.2),
+    0 10px 10px -5px rgba(15, 23, 42, 0.1);
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .app-root {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .main-layout {
+    padding: 12px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+
