@@ -32,7 +32,6 @@ export default function TodayView() {
   const today = todayString()
   const todayDate = useMemo(() => new Date(), [])
   const totalDuration = events.reduce((sum, e) => sum + (e.duration || 0), 0)
-  const totalIncome = events.reduce((sum, e) => sum + (e.fee || 0), 0)
 
   const timeSlots: TimeSlot[] = ['上午', '下午', '夜场', '全天']
   const eventsBySlot: Record<TimeSlot, Event[]> = useMemo(() => {

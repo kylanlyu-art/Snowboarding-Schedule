@@ -106,7 +106,7 @@ export default function StatsView({ scope }: Props) {
     return Object.entries(byMonth)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([key, v]) => {
-        const [y, m] = key.split('-')
+        const [, m] = key.split('-')
         return { label: `${parseInt(m, 10)}月`, count: v.count, income: v.income }
       })
   }, [events, scope])

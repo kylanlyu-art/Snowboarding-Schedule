@@ -2,9 +2,14 @@ import Dexie, { type EntityTable } from 'dexie'
 import type { Config, Event } from './types'
 import { defaultConfig } from './types'
 
+/** 存入 IndexedDB 的配置带 id；对外接口仍用 Config */
+export interface StoredConfig extends Config {
+  id: string
+}
+
 export interface DBSchema {
   events: EntityTable<Event, 'id'>
-  config: EntityTable<Config, 'id'>
+  config: EntityTable<StoredConfig, 'id'>
 }
 
 class CoachScheduleDB extends Dexie {
@@ -29,12 +34,13 @@ export async function getConfig(): Promise<Config> {
   const existing = await db.config.get(CONFIG_ID)
   if (existing) return existing
 
-  const toSave: Config = { ...defaultConfig }
-  await db.config.put({ ...(toSave as Config), id: CONFIG_ID } as any)
+  const toSave: StoredConfig = { ...defaultConfig, id: CONFIG_ID }
+  await db.config.put(toSave)
   return toSave
 }
 
 export async function saveConfig(config: Config): Promise<void> {
-  await db.config.put({ ...(config as Config), id: CONFIG_ID } as any)
+  const stored: StoredConfig = { ...config, id: CONFIG_ID }
+  await db.config.put(stored)
 }
 

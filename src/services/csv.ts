@@ -15,7 +15,7 @@ const CSV_TO_TYPE: Record<string, EventType> = {
 }
 
 function formatDateForCsv(dateStr: string): string {
-  const [y, m, d] = dateStr.split('-').map(Number)
+  const [, m, d] = dateStr.split('-').map(Number)
   return `${m}月${d}日`
 }
 

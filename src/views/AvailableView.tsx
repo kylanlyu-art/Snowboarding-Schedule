@@ -42,7 +42,6 @@ export default function AvailableView() {
 
   const days: DayAvailability[] = useMemo(() => {
     const today = startOfDay(new Date())
-    const timeSlots: TimeSlot[] = ['上午', '下午', '夜场', '全天']
     const byDate: Record<string, Event[]> = {}
     for (const e of events) {
       if (!byDate[e.date]) byDate[e.date] = []
