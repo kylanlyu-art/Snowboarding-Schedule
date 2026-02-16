@@ -60,8 +60,8 @@ export default function EventListView() {
       ) : events.length === 0 ? (
         <div style={{ fontSize: 14, color: '#6b7280' }}>该范围内暂无事件</div>
       ) : (
-        <div className="timetable" style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+        <div className="timetable event-list-table-wrap">
+          <table style={{ width: '100%', minWidth: 640, borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #e5e7eb', background: '#f9fafb' }}>
                 <th style={{ textAlign: 'left', padding: '8px 10px' }}>日期</th>

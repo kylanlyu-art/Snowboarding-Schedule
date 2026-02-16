@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Segoe UI',
     sans-serif;
@@ -22,6 +24,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #e5e7eb;
+  /* 安全区域：刘海屏 / 底部横条 */
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 a {

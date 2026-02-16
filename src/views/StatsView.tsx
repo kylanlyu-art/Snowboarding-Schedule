@@ -172,14 +172,7 @@ export default function StatsView({ scope }: Props) {
         </div>
       )}
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-          gap: 12,
-          marginBottom: 12,
-        }}
-      >
+      <div className="stats-kpi-grid" style={{ marginBottom: 12 }}>
         <div className="stats-kpi-card">
           <div className="stats-kpi-value">{stats.totalTeachingHours.toFixed(1)}</div>
           <div className="stats-kpi-label">教学课时（小时）</div>
@@ -212,7 +205,7 @@ export default function StatsView({ scope }: Props) {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+      <div className="stats-charts-grid" style={{ marginBottom: 20 }}>
         <div className="event-card" style={{ padding: 14 }}>
           <div className="stats-section-title">活动类型分布</div>
           <Bar

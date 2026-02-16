@@ -2,6 +2,7 @@
   display: flex;
   min-height: 100vh;
   color: #111827;
+  padding-top: env(safe-area-inset-top, 0);
 }
 
 .sidebar {
@@ -48,6 +49,7 @@
   gap: 8px;
   width: 100%;
   padding: 8px 12px;
+  min-height: 44px;
   border-radius: 8px;
   border: none;
   background: transparent;
@@ -192,7 +194,8 @@
 .timetable {
   border-radius: 12px;
   border: 1px solid #e5e7eb;
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   background: #ffffff;
 }
 
@@ -281,6 +284,45 @@
   background: #f3f4f6;
 }
 
+/* 事件列表表格容器：小屏横向滚动 */
+.event-list-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -4px;
+}
+.event-list-table-wrap table {
+  min-width: 640px;
+}
+
+/* 统计 KPI 网格：移动端单列，平板两列，桌面四列 */
+.stats-kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .stats-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .stats-kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* 统计页：类型分布 + 场地分布 网格 */
+.stats-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .stats-charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .stats-kpi-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -355,8 +397,9 @@
 .form-select {
   border-radius: 8px;
   border: 1px solid #d1d5db;
-  padding: 6px 8px;
-  font-size: 14px;
+  padding: 10px 12px;
+  min-height: 44px;
+  font-size: 16px;
   font-family: inherit;
 }
 
@@ -370,6 +413,7 @@
 
 .form-textarea {
   resize: vertical;
+  min-height: 88px;
 }
 
 .form-actions {
@@ -382,8 +426,9 @@
 .primary-button {
   border-radius: 999px;
   border: none;
-  padding: 8px 18px;
-  font-size: 14px;
+  padding: 10px 18px;
+  min-height: 44px;
+  font-size: 16px;
   font-weight: 500;
   background-color: #f97316;
   color: #111827;
@@ -403,8 +448,9 @@
 .secondary-button {
   border-radius: 999px;
   border: 1px solid #d1d5db;
-  padding: 6px 14px;
-  font-size: 13px;
+  padding: 10px 14px;
+  min-height: 44px;
+  font-size: 14px;
   background-color: #ffffff;
   color: #374151;
   cursor: pointer;
@@ -413,8 +459,9 @@
 .danger-button {
   border-radius: 999px;
   border: 1px solid #fecaca;
-  padding: 6px 14px;
-  font-size: 13px;
+  padding: 10px 14px;
+  min-height: 44px;
+  font-size: 14px;
   background-color: #fee2e2;
   color: #b91c1c;
   cursor: pointer;
@@ -454,6 +501,7 @@
   margin-top: 8px;
 }
 
+/* 移动端 / 平板：侧栏横排、表单纵排、内容区紧凑 */
 @media (max-width: 900px) {
   .app-root {
     flex-direction: column;
@@ -462,15 +510,62 @@
   .sidebar {
     width: 100%;
     flex-direction: row;
+    flex-wrap: wrap;
     overflow-x: auto;
+    padding: 12px;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar-header {
+    width: 100%;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+  }
+
+  .nav-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 0;
+  }
+
+  .sidebar-section-title {
+    width: 100%;
+    padding: 8px 12px 2px;
   }
 
   .main-layout {
     padding: 12px;
+    min-width: 0;
+  }
+
+  .main-content {
+    padding: 12px 16px;
   }
 
   .form-row {
     flex-direction: column;
+  }
+
+  .form {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .main-title {
+    font-size: 18px;
+  }
+
+  .modal {
+    width: calc(100% - 24px);
+    margin: 12px;
   }
 }
 
