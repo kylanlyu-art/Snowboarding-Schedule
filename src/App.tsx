@@ -59,6 +59,12 @@ const SECTION_LABELS: Record<MainSection, { title: string; subtitle?: string }> 
 
 function App() {
   const [section, setSection] = useState<MainSection>('today')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  function goTo(s: MainSection) {
+    setSection(s)
+    setMobileMenuOpen(false)
+  }
 
   function renderContent() {
     switch (section) {
@@ -108,7 +114,14 @@ function App() {
   }
 
   return (
-    <div className="app-root">
+    <div className={`app-root ${mobileMenuOpen ? 'mobile-drawer-open' : ''}`}>
+      {mobileMenuOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden
+        />
+      )}
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="sidebar-title">滑雪教练课表管理</div>
@@ -119,21 +132,21 @@ function App() {
           <div className="sidebar-section-title">日程</div>
           <button
             className={`nav-item ${section === 'today' ? 'active' : ''}`}
-            onClick={() => setSection('today')}
+            onClick={() => goTo('today')}
           >
             <span className="nav-item-icon">📅</span>
             今日
           </button>
           <button
             className={`nav-item ${section === 'week' ? 'active' : ''}`}
-            onClick={() => setSection('week')}
+            onClick={() => goTo('week')}
           >
             <span className="nav-item-icon">🗓️</span>
             本周
           </button>
           <button
             className={`nav-item ${section === 'schedule' ? 'active' : ''}`}
-            onClick={() => setSection('schedule')}
+            onClick={() => goTo('schedule')}
           >
             <span className="nav-item-icon">📆</span>
             未来课表
@@ -144,21 +157,21 @@ function App() {
           <div className="sidebar-section-title">添加事件</div>
           <button
             className={`nav-item ${section === 'add-course' ? 'active' : ''}`}
-            onClick={() => setSection('add-course')}
+            onClick={() => goTo('add-course')}
           >
             <span className="nav-item-icon">➕</span>
             添加课程
           </button>
           <button
             className={`nav-item ${section === 'add-practice' ? 'active' : ''}`}
-            onClick={() => setSection('add-practice')}
+            onClick={() => goTo('add-practice')}
           >
             <span className="nav-item-icon">🏂</span>
             添加练习
           </button>
           <button
             className={`nav-item ${section === 'add-training' ? 'active' : ''}`}
-            onClick={() => setSection('add-training')}
+            onClick={() => goTo('add-training')}
           >
             <span className="nav-item-icon">📚</span>
             添加培训
@@ -169,14 +182,14 @@ function App() {
           <div className="sidebar-section-title">空余时间</div>
           <button
             className={`nav-item ${section === 'available' ? 'active' : ''}`}
-            onClick={() => setSection('available')}
+            onClick={() => goTo('available')}
           >
             <span className="nav-item-icon">⏰</span>
             查看空余
           </button>
           <button
             className={`nav-item ${section === 'share-available' ? 'active' : ''}`}
-            onClick={() => setSection('share-available')}
+            onClick={() => goTo('share-available')}
           >
             <span className="nav-item-icon">📤</span>
             分享空余
@@ -187,28 +200,28 @@ function App() {
           <div className="sidebar-section-title">统计</div>
           <button
             className={`nav-item ${section === 'stats-today' ? 'active' : ''}`}
-            onClick={() => setSection('stats-today')}
+            onClick={() => goTo('stats-today')}
           >
             <span className="nav-item-icon">📊</span>
             今日统计
           </button>
           <button
             className={`nav-item ${section === 'stats-week' ? 'active' : ''}`}
-            onClick={() => setSection('stats-week')}
+            onClick={() => goTo('stats-week')}
           >
             <span className="nav-item-icon">📈</span>
             本周统计
           </button>
           <button
             className={`nav-item ${section === 'stats-month' ? 'active' : ''}`}
-            onClick={() => setSection('stats-month')}
+            onClick={() => goTo('stats-month')}
           >
             <span className="nav-item-icon">🗓️</span>
             本月统计
           </button>
           <button
             className={`nav-item ${section === 'stats-season' ? 'active' : ''}`}
-            onClick={() => setSection('stats-season')}
+            onClick={() => goTo('stats-season')}
           >
             <span className="nav-item-icon">❄️</span>
             本季统计
@@ -219,21 +232,21 @@ function App() {
           <div className="sidebar-section-title">数据</div>
           <button
             className={`nav-item ${section === 'events-list' ? 'active' : ''}`}
-            onClick={() => setSection('events-list')}
+            onClick={() => goTo('events-list')}
           >
             <span className="nav-item-icon">📋</span>
             事件列表
           </button>
           <button
             className={`nav-item ${section === 'import' ? 'active' : ''}`}
-            onClick={() => setSection('import')}
+            onClick={() => goTo('import')}
           >
             <span className="nav-item-icon">📥</span>
             导入 CSV
           </button>
           <button
             className={`nav-item ${section === 'export' ? 'active' : ''}`}
-            onClick={() => setSection('export')}
+            onClick={() => goTo('export')}
           >
             <span className="nav-item-icon">📤</span>
             导出 CSV
@@ -244,21 +257,21 @@ function App() {
           <div className="sidebar-section-title">设置</div>
           <button
             className={`nav-item ${section === 'settings-time' ? 'active' : ''}`}
-            onClick={() => setSection('settings-time')}
+            onClick={() => goTo('settings-time')}
           >
             <span className="nav-item-icon">⚙️</span>
             时段配置
           </button>
           <button
             className={`nav-item ${section === 'settings-price' ? 'active' : ''}`}
-            onClick={() => setSection('settings-price')}
+            onClick={() => goTo('settings-price')}
           >
             <span className="nav-item-icon">💵</span>
             价格配置
           </button>
           <button
             className={`nav-item ${section === 'settings-other' ? 'active' : ''}`}
-            onClick={() => setSection('settings-other')}
+            onClick={() => goTo('settings-other')}
           >
             <span className="nav-item-icon">🔧</span>
             其他设置
@@ -266,8 +279,20 @@ function App() {
         </div>
       </aside>
 
+      <header className="mobile-header" aria-hidden>
+        <button
+          type="button"
+          className="mobile-menu-btn"
+          onClick={() => setMobileMenuOpen(true)}
+          aria-label="打开菜单"
+        >
+          ☰ 菜单
+        </button>
+        <span className="mobile-header-title">{SECTION_LABELS[section].title}</span>
+      </header>
+
       <main className="main-layout">
-        <header className="main-header">
+        <header className="main-header main-header-desktop">
           <div>
             <div className="main-title">{SECTION_LABELS[section].title}</div>
             {SECTION_LABELS[section].subtitle && (
