@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import type { User } from '@supabase/supabase-js'
 import TodayView from './views/TodayView'
+import AuthView from './views/AuthView'
 import AddCourseForm from './views/AddCourseForm'
 import AddPracticeForm from './views/AddPracticeForm'
 import AddTrainingForm from './views/AddTrainingForm'
@@ -14,6 +16,8 @@ import EventListView from './views/EventListView'
 import SettingsTimeView from './views/SettingsTimeView'
 import SettingsPriceView from './views/SettingsPriceView'
 import SettingsOtherView from './views/SettingsOtherView'
+import { isSupabaseConfigured } from './lib/supabase'
+import { migrateLocalToSupabase, isMigrationDone } from './lib/migrateToSupabase'
 import './App.css'
 
 type MainSection =
@@ -60,6 +64,42 @@ const SECTION_LABELS: Record<MainSection, { title: string; subtitle?: string }> 
 function App() {
   const [section, setSection] = useState<MainSection>('today')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+  const [authChecked, setAuthChecked] = useState(false)
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      setAuthChecked(true)
+      return
+    }
+    let cancelled = false
+    let unsubscribe: (() => void) | undefined
+    async function init() {
+      const { supabase: sb } = await import('./lib/supabase')
+      if (!sb || cancelled) return
+      const { data: { session } } = await sb.auth.getSession()
+      if (!cancelled) setUser(session?.user ?? null)
+      setAuthChecked(true)
+      const { data: { subscription } } = sb.auth.onAuthStateChange((_event, session) => {
+        if (!cancelled) setUser(session?.user ?? null)
+      })
+      unsubscribe = subscription.unsubscribe
+    }
+    init()
+    return () => {
+      cancelled = true
+      unsubscribe?.()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!user || isMigrationDone()) return
+    migrateLocalToSupabase(user.id).then(({ ok, err }) => {
+      if (ok > 0 || err > 0) {
+        console.log(`迁移完成：成功 ${ok} 条${err > 0 ? `，失败 ${err} 条` : ''}`)
+      }
+    })
+  }, [user])
 
   function goTo(s: MainSection) {
     setSection(s)
@@ -111,6 +151,47 @@ function App() {
           </p>
         )
     }
+  }
+
+  if (!authChecked) {
+    return (
+      <div style={{ padding: 24, textAlign: 'center', color: '#6b7280' }}>
+        加载中…
+      </div>
+    )
+  }
+
+  if (!isSupabaseConfigured()) {
+    return (
+      <div style={{ padding: 24, maxWidth: 400, margin: '40px auto' }}>
+        <h2 style={{ marginBottom: 8 }}>未配置云端</h2>
+        <p className="form-hint">
+          请设置环境变量 VITE_SUPABASE_URL 和 VITE_SUPABASE_ANON_KEY 后使用云端课表。本地开发可复制 .env.example 为 .env.local 并填入 Supabase 项目 URL 与 anon key。
+        </p>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="app-root">
+        <main className="main-layout" style={{ justifyContent: 'center' }}>
+          <AuthView
+            onSuccess={async () => {
+              const { supabase: sb } = await import('./lib/supabase')
+              const { data } = (await sb?.auth.getSession()) ?? {}
+              setUser(data?.session?.user ?? null)
+            }}
+          />
+        </main>
+      </div>
+    )
+  }
+
+  async function handleSignOut() {
+    const { supabase: sb } = await import('./lib/supabase')
+    await sb?.auth.signOut()
+    setUser(null)
   }
 
   return (
@@ -275,6 +356,10 @@ function App() {
           >
             <span className="nav-item-icon">🔧</span>
             其他设置
+          </button>
+          <button type="button" className="nav-item" onClick={handleSignOut} style={{ marginTop: 8 }}>
+            <span className="nav-item-icon">🚪</span>
+            退出登录
           </button>
         </div>
       </aside>
